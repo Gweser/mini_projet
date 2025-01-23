@@ -18,9 +18,6 @@ udp.o: udp.c udp.h
 erreur.o: erreur.c erreur.h
 	$(COMPILER) -c erreur.c -o erreur.o
 
-nombre.o: nombre.c nombre.h
-	$(COMPILER) -c nombre.c -o nombre.o
-
 $(EXE_DIR):
 	mkdir -p $(EXE_DIR)
 
