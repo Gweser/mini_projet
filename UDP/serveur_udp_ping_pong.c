@@ -7,11 +7,16 @@
 #include <string.h>
 #include <netinet/in.h>
 
+
+int traiter_commande_wrapper(int argc, char** argv) {
+    traiter_commande(argc, argv, "Usage: <port>\nMauvais nombre d'arguments");
+    traiter_commande(argc, argv, "Usage: <port>\n<port> est un port non réservé");
+    return 0;
+}
+
 int main(int argc, char** argv) {
-	//traiter_commande(/*A COMPLETER*/, argv[0], "<port>\nmauvais nombre d'arguments");
-	//traiter_commande(/*A COMPLETER*/, argv[0], "<port>\n<port> est un port non réservé");
+    traiter_commande_wrapper(argc, argv);
 
-	/*A COMPLETER*/
 
-	exit(0);
+    exit(0);
 }
