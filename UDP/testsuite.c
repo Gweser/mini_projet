@@ -11,20 +11,10 @@ int init_suite(void) { return 0; }
 /* Démontage de la fixation - appelé après chaque cas de test. */
 int clean_suite(void) { return 0; }
 
-/****** Cas de test - envoi de message UDP *****/
-void test_envoi_message(void) {
-    CU_ASSERT_EQUAL(send_udp_message("127.0.0.1", 8080, "Test message"), 0);
-}
-/** Montage de la fixation - appelé avant chaque cas de test. **/
-int init_suite(void) { return 0; }
-
-/* Démontage de la fixation - appelé après chaque cas de test. */
-int clean_suite(void) { return 0; }
-
 /****** Cas de test - validation de l'adresse IP *****/
 void test_validation_ip(void) {
     CU_ASSERT_TRUE(is_valid_ip("192.168.1.1"));
-    CU_ASSERT_FALSE(is_valid_ip("256.168.1;1"));
+    CU_ASSERT_FALSE(is_valid_ip("999.999.999.999"));
 }
 
 /**** Cas de test - validation du port *****/ 
@@ -69,77 +59,6 @@ int main ( void )
   
    /* cloture des tests */
    CU_cleanup_registry();
-   CU_pSuite pSuite = NULL;
-   unsigned int status = 0;
-
-   /* initialisation des test CUnit */
-   if ( CUE_SUCCESS != CU_initialize_registry() )
-      return CU_get_error();
-
-   /* ajout de la suite de test */
-   pSuite = CU_add_suite( "Test module client", init_suite, clean_suite );
-   if ( NULL == pSuite ) {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
-
-   /* ajout des cas de test dans la suite de test */
-   if ( (NULL == CU_add_test(pSuite, "Cas de test - envoi de message UDP", test_envoi_message))
-      )
-   {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
-
-   /* lancement de tous les tests avec l'interface de base */
-   CU_basic_set_mode(CU_BRM_NORMAL);
-   if ( CUE_SUCCESS != CU_basic_run_tests() )
-      return CU_get_error();
-   
-   status = CU_get_number_of_tests_failed();
-   CU_basic_show_failures(CU_get_failure_list());
-  
-   /* cloture des tests */
-   CU_cleanup_registry();
    return status;
 }
- 
 
-
-/******************* Lancement des tests ***********************/
-int main ( void )
-{
-   CU_pSuite pSuite = NULL;
-   unsigned int status = 0;
-
-   /* initialisation des test CUnit */
-   if ( CUE_SUCCESS != CU_initialize_registry() )
-      return CU_get_error();
-
-   /* ajout de la suite de test */
-   pSuite = CU_add_suite( "Test module client", init_suite, clean_suite );
-   if ( NULL == pSuite ) {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
-
-   /* ajout des cas de test dans la suite de test */
-   if ( (NULL == CU_add_test(pSuite, "Cas de test - envoi de message UDP", test_envoi_message))
-      )
-   {
-      CU_cleanup_registry();
-      return CU_get_error();
-   }
-
-   /* lancement de tous les tests avec l'interface de base */
-   CU_basic_set_mode(CU_BRM_NORMAL);
-   if ( CUE_SUCCESS != CU_basic_run_tests() )
-      return CU_get_error();
-   
-   status = CU_get_number_of_tests_failed();
-   CU_basic_show_failures(CU_get_failure_list());
-  
-   /* cloture des tests */
-   CU_cleanup_registry();
-   return status;
-}
