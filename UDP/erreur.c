@@ -5,10 +5,6 @@
 #include "erreur.h"
 
 
-void traiter_commande(int argc, char **argv, const char *message) {
-    
-}
-
 /* Afficher une éventuelle erreur et quitter */
 void traiter_erreur(const char * msg) {
 	if (errno) {
