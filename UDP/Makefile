@@ -3,7 +3,7 @@ EXE_DIR=/tmp/
 FICHIERS=erreur udp nombre
 OBJS:=$(FICHIERS:%=%.o)
 
-all: division echo ping_pong somme relais
+all: ping_pong  
 	-rm $(OBJS)
 
 ping_pong: client_udp_ping_pong.c serveur_udp_ping_pong.c $(EXE_DIR) $(OBJS)
