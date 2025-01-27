@@ -5,7 +5,7 @@
 #include <string.h>
 
 /* Afficher une éventuelle erreur et quitter */
-int traiter_erreur(const char * msg) {
+void traiter_erreur(const char * msg) {
     if (errno) {
         perror(msg);
         exit(1);
@@ -13,7 +13,7 @@ int traiter_erreur(const char * msg) {
 }
 
 /* Verifier le ligne de commande */
-int traiter_commande(int erreur, const char * cmd, const char * arg_desc) {
+void traiter_commande(int erreur, const char * cmd, const char * arg_desc) {
     if (erreur) {
         fprintf(stderr, "Ligne de commande invalide\n");
         fprintf(stderr, "Usage : %s %s\n", cmd, arg_desc);
