@@ -1,16 +1,21 @@
 COMPILER=gcc
-EXE_DIR=/tmp/
+EXE_DIR=/tmp/ping_pong/UDP
 FICHIERS=erreur udp nombre
-OBJS:=$(FICHIERS:%=%.o)
+OBJS=$(FICHIERS:%=%.o)
 
-all: ping_pong  
-	-rm $(OBJS)
+all: ping_pong
 
-ping_pong: client_udp_ping_pong.c serveur_udp_ping_pong.c $(EXE_DIR) $(OBJS)
-	mkdir -p $(EXE_DIR)/$@/UDP
-	$(COMPILER) erreur.o udp.o nombre.o client_udp_$@.c -o $(EXE_DIR)/$@/UDP/client_udp_$@
-	$(COMPILER) erreur.o udp.o nombre.o serveur_udp_$@.c -o $(EXE_DIR)/$@/UDP/serveur_udp_$@
-	chmod -R u+x $(EXE_DIR)/$@/UDP
+ping_pong: client_udp_ping_pong serveur_udp_ping_pong
+
+client_udp_ping_pong: client_udp_ping_pong.c $(OBJS)
+	mkdir -p $(EXE_DIR)
+	$(COMPILER) $(OBJS) client_udp_ping_pong.c -o $(EXE_DIR)/client_udp_ping_pong
+	chmod -R u+x $(EXE_DIR)/client_udp_ping_pong
+
+serveur_udp_ping_pong: serveur_udp_ping_pong.c $(OBJS)
+	mkdir -p $(EXE_DIR)
+	$(COMPILER) $(OBJS) serveur_udp_ping_pong.c -o $(EXE_DIR)/serveur_udp_ping_pong
+	chmod -R u+x $(EXE_DIR)/serveur_udp_ping_pong
 
 udp.o: udp.c udp.h
 	$(COMPILER) -c udp.c -o udp.o
@@ -18,12 +23,8 @@ udp.o: udp.c udp.h
 erreur.o: erreur.c erreur.h
 	$(COMPILER) -c erreur.c -o erreur.o
 
-$(EXE_DIR):
-	mkdir -p $(EXE_DIR)
-
-testsuite: $(OBJS) testsuite.c
-	$(COMPILER) -o testsuite testsuite.c $(OBJS) -lcunit
-	./testsuite
+nombre.o: nombre.c nombre.h
+	$(COMPILER) -c nombre.c -o nombre.o
 
 clean:
-	rm -f $(OBJS) $(EXE_DIR)/*/UDP/* testsuite
+	rm -f $(OBJS) $(EXE_DIR)/* testsuite
