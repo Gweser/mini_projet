@@ -14,7 +14,7 @@ void traiter_erreur(const char * msg) {
 }
 
 /* Verifier le ligne de commande */
-void traiter_commande(int erreur, const char * cmd, const char * arg_desc) {
+void traiter_commande_wrapper(int erreur, const char * cmd, const char * arg_desc) {
 	if (erreur) {
   		fprintf(stderr, "Ligne de commande invalide\n");
   		fprintf(stderr, "Usage : %s %s\n", cmd, arg_desc);
