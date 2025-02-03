@@ -20,9 +20,3 @@ void traiter_commande(int erreur, const char * cmd, const char * arg_desc) {
 		exit(1);
 	}
 }
-
-/* Traiter le mode verbose */
-int verbose_mode() {
-	return (getenv("VERBOSE") != NULL && \
-		strcmp(getenv("VERBOSE"), "1") == 0);
-}
