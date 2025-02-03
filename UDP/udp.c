@@ -46,8 +46,9 @@ void init_addr(SOCK* sock) {
 
 /* Dimensionner la file d'attente d'une socket */
 void dimensionner_file_attente_socket(int taille, SOCK* sock) {
-    (void)taille; 
-    (void)sock;  
+    // Cette fonction n'est pas nécessaire pour UDP car il n'y a pas de file d'attente
+    (void)taille; // Pour éviter l'avertissement de variable non utilisée
+    (void)sock;   // Pour éviter l'avertissement de variable non utilisée
 }
 
 /* Recevoir un message */
@@ -57,7 +58,7 @@ void recevoir_message(SOCK* dst, char* buffer) {
     if (nbytes < 0) {
         traiter_erreur(__FUNCTION__);
     }
-    buffer[nbytes] = '\0';
+    buffer[nbytes] = '\0'; // Assurer que le message est terminé par un caractère nul
 }
 
 /* Émettre un message */
@@ -73,5 +74,36 @@ void envoyer_message(SOCK* dst, char* message) {
 void fermer_connexion(SOCK* sock) {
     if (close(sock->sockfd) < 0) {
         traiter_erreur(__FUNCTION__);
-		}
+    }
+}
+
+/* Fonctions de validation */
+int est_ip_valide(const char *ip) {
+    if (ip == NULL) return 0;
+    
+    int segments = 0;
+    int digits = 0;
+    int value = 0;
+    
+    while (*ip) {
+        if (*ip == '.') {
+            if (digits == 0) return 0;
+            segments++;
+            digits = 0;
+            value = 0;
+        } else if (*ip >= '0' && *ip <= '9') {
+            value = value * 10 + (*ip - '0');
+            digits++;
+            if (value > 255 || digits > 3) return 0;
+        } else {
+            return 0;
+        }
+        ip++;
+    }
+    
+    return segments == 3 && digits > 0;
+}
+
+int est_port_valide(int port) {
+    return port >= 1024 && port <= 65535;  // Ports non privilégiés
 }
