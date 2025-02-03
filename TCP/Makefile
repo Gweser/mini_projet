@@ -3,7 +3,7 @@ EXE_DIR=/tmp/
 FICHIERS=erreur tcp nombre
 OBJS:=$(FICHIERS:%=%.o)
 
-all: serveur_tcp testsuite
+all: serveur_tcp testsuite analyse
 	-rm $(OBJS)
 
 serveur_tcp: serveur_tcp.c $(EXE_DIR) $(OBJS)
@@ -22,6 +22,9 @@ erreur.o: erreur.c erreur.h
 
 nombre.o: nombre.c nombre.h
 	$(COMPILER) -c nombre.c -o nombre.o
+
+analyse:
+	cppcheck --enable=all --inconclusive --std=c99 --language=c --suppress=missingIncludeSystem .
 
 $(EXE_DIR):
 	mkdir -p $(EXE_DIR)
