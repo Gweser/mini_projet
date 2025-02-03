@@ -1,4 +1,4 @@
-int is_valid_ip(const char *ip) {
+int est_ip_valide(const char *ip) {
     if (ip == NULL) return 0;
     
     int segments = 0;
@@ -24,6 +24,6 @@ int is_valid_ip(const char *ip) {
     return segments == 3 && digits > 0;
 }
 
-int is_valid_port(int port) {
+int est_port_valide(int port) {
     return port >= 1024 && port <= 65535;  // Ports non privilégiés
 }
