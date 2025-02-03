@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "test.c"
 
 /** Montage de la fixation - appelé avant chaque cas de test. **/
 int init_suite(void) { return 0; }
