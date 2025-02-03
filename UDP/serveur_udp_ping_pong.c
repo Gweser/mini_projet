@@ -10,7 +10,6 @@ int main(int argc, char** argv) {
 
     traiter_commande(argc != 2, argv[0], "<port>\nmauvais nombre d'arguments");
     
-   
     int port = atoi(argv[1]);
     traiter_commande(port < 1024 || port > 65535, argv[0], "<port>\n<port> est un port non réservé");
     
@@ -18,26 +17,29 @@ int main(int argc, char** argv) {
     SOCK socket_serveur;
     creer_socket(NULL, port, &socket_serveur);
     
-  
     attacher_socket(&socket_serveur);
     
     printf("Serveur démarré sur le port %d\n", port);
     
-
     char buffer[TAILLE_BUFFER];
     
-    
     while(1) {
-      
         init_addr(&socket_serveur);
         
         recevoir_message(&socket_serveur, buffer);
         
         printf("Message reçu : %s\n", buffer);
         
-        char reponse[TAILLE_BUFFER];
-        snprintf(reponse, TAILLE_BUFFER, "Message reçu: %s", buffer);
-        envoyer_message(&socket_serveur, reponse);
+        // Vérifier si le message reçu est "ping" et répondre avec "pong"
+        if (strcmp(buffer, "ping") == 0) {
+            envoyer_message(&socket_serveur, "pong");
+            printf("Réponse envoyée : pong\n");
+        } else {
+            char reponse[TAILLE_BUFFER];
+            snprintf(reponse, TAILLE_BUFFER, "Message reçu: %s", buffer);
+            envoyer_message(&socket_serveur, reponse);
+            printf("Réponse envoyée : %s\n", reponse);
+        }
     }
     
     // Fermer la socket
