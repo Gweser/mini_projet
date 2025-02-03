@@ -1,22 +1,21 @@
 COMPILER=gcc
 EXE_DIR=/tmp/
-FICHIERS=erreur udp nombre
+FICHIERS=erreur tcp nombre
 OBJS:=$(FICHIERS:%=%.o)
 
-all: ping_pong testsuite
+all: serveur_tcp testsuite
 	-rm $(OBJS)
 
-ping_pong: client_udp_ping_pong.c serveur_udp_ping_pong.c $(EXE_DIR) $(OBJS)
-	mkdir -p $(EXE_DIR)/$@/UDP
-	$(COMPILER) erreur.o udp.o nombre.o client_udp_$@.c -o $(EXE_DIR)/$@/UDP/client_udp_$@
-	$(COMPILER) erreur.o udp.o nombre.o serveur_udp_$@.c -o $(EXE_DIR)/$@/UDP/serveur_udp_$@
-	chmod -R u+x $(EXE_DIR)/$@/UDP
+serveur_tcp: serveur_tcp.c $(EXE_DIR) $(OBJS)
+	mkdir -p $(EXE_DIR)/$@
+	$(COMPILER) erreur.o tcp.o nombre.o serveur_tcp.c -o $(EXE_DIR)/$@/serveur_tcp
+	chmod -R u+x $(EXE_DIR)/$@
 
-testsuite: testsuite.c udp.o erreur.o nombre.o
-	$(COMPILER) -o testsuite testsuite.c udp.o erreur.o nombre.o -lcunit
+testsuite: testsuite.c tcp.o erreur.o nombre.o
+	$(COMPILER) -o testsuite testsuite.c tcp.o erreur.o nombre.o -lcunit
 
-udp.o: udp.c udp.h
-	$(COMPILER) -c udp.c -o udp.o
+tcp.o: tcp.c tcp.h
+	$(COMPILER) -c tcp.c -o tcp.o
 
 erreur.o: erreur.c erreur.h
 	$(COMPILER) -c erreur.c -o erreur.o
@@ -29,4 +28,4 @@ $(EXE_DIR):
 
 clean:
 	rm -f *.o testsuite
-	rm -rf $(EXE_DIR)/ping_pong
+	rm -rf $(EXE_DIR)/serveur_tcp
