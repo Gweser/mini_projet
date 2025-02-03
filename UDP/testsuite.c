@@ -16,7 +16,7 @@ int clean_suite(void) { return 0; }
 /****** Cas de test - validation de l'adresse IP *****/
 void test_validation_ip(void) {
     CU_ASSERT(is_valid_ip("192.168.1.1"));
-    CU_ASSERT(!is_valid_ip("192.168.1.1101"));
+    CU_ASSERT(!is_valid_ip("192.168.1.1"));
 }
 
 /**** Cas de test - validation du port *****/ 
