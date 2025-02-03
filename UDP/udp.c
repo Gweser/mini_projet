@@ -73,4 +73,5 @@ void envoyer_message(SOCK* dst, char* message) {
 void fermer_connexion(SOCK* sock) {
     if (close(sock->sockfd) < 0) {
         traiter_erreur(__FUNCTION__);
-    }
+		}
+}
