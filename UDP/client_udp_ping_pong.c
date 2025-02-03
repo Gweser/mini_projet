@@ -15,7 +15,7 @@ int is_valid_ip(const char* ip) {
 
 void traiter_commande_wrapper(int argc, char** argv) {
     // Vérifier le nombre d'arguments
-    traiter_commande(argc != 3, argv[0], 
+    traiter_commande(argc != 4, argv[0], 
         "<adresse IP> <port>\nmauvais nombre d'aguments");
 
     // Vérifier le format de l'adresse IP
