@@ -61,5 +61,4 @@ int main ( void )
    /* cloture des tests */
    CU_cleanup_registry();
    return status;
-}s
 }
