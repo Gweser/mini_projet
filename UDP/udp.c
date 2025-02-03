@@ -46,19 +46,18 @@ void init_addr(SOCK* sock) {
 
 /* Dimensionner la file d'attente d'une socket */
 void dimensionner_file_attente_socket(int taille, SOCK* sock) {
-    // Cette fonction n'est pas nécessaire pour UDP car il n'y a pas de file d'attente
-    (void)taille; // Pour éviter l'avertissement de variable non utilisée
-    (void)sock;   // Pour éviter l'avertissement de variable non utilisée
+    (void)taille; 
+    (void)sock;  
 }
 
 /* Recevoir un message */
 void recevoir_message(SOCK* dst, char* buffer) {
     ssize_t nbytes = recvfrom(dst->sockfd, buffer, TAILLE_BUFFER - 1, 0,
-                             (struct sockaddr*)&dst->addr, &dst->addrlen);
+                             (struct sockaddr*)&dst->addr, (socklen_t*)&dst->addrlen);
     if (nbytes < 0) {
         traiter_erreur(__FUNCTION__);
     }
-    buffer[nbytes] = '\0'; // Assurer que le message est terminé par un caractère nul
+    buffer[nbytes] = '\0';
 }
 
 /* Émettre un message */
@@ -75,4 +74,3 @@ void fermer_connexion(SOCK* sock) {
     if (close(sock->sockfd) < 0) {
         traiter_erreur(__FUNCTION__);
     }
-}

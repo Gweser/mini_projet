@@ -11,7 +11,6 @@ typedef struct {
     socklen_t addrlen;             
 } SOCK;
 
-
 void creer_socket(char* adresseIP, int port, SOCK* sock);
 void attacher_socket(SOCK* sock);
 void init_addr(SOCK* sock);
