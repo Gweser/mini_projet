@@ -8,7 +8,7 @@
 #include <arpa/inet.h>
 
 // Fonction pour vérifier si une chaîne est une adresse IP valide
-int est_ip_valide(const char* ip) {
+int is_valid_ip(const char* ip) {
     struct sockaddr_in sa;
     return inet_pton(AF_INET, ip, &(sa.sin_addr)) == 1;
 }
@@ -19,7 +19,7 @@ void traiter_commande_wrapper(int argc, char** argv) {
         "<adresse IP> <port>\nmauvais nombre d'aguments");
 
     // Vérifier le format de l'adresse IP
-    traiter_commande(!est_ip_valide(argv[1]), argv[0], 
+    traiter_commande(!is_valid_ip(argv[1]), argv[0], 
         "<adresse IP> <port>\n<adresse IP> est une adresse IP au format décimal pointé");
 
     // Vérifier que le port est valide 
