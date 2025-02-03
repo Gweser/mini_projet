@@ -22,7 +22,7 @@ void traiter_commande_wrapper(int argc, char** argv) {
     traiter_commande(!est_ip_valide(argv[1]), argv[0], 
         "<adresse IP> <port> <message>\n<adresse IP> est une adresse IP au format décimal pointé");
 
-    // Vérifier que le port est valide (non réservé et dans la plage correcte)
+    // Vérifier que le port est valide 
     int port = atoi(argv[2]);
     traiter_commande(port < 1024 || port > 65535, argv[0], 
         "<adresse IP> <port> <message>\n<port> est un port non réservé");
