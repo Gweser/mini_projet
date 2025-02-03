@@ -7,6 +7,9 @@
 #include <string.h>
 #include <stdlib.h>
 
+int est_ip_valide(const char *ip);
+int est_port_valide(int port);
+
 /** Montage de la fixation - appelé avant chaque cas de test. **/
 int init_suite(void) { return 0; }
 
@@ -14,14 +17,17 @@ int clean_suite(void) { return 0; }
 
 /****** Cas de test - validation de l'adresse IP *****/
 void test_validation_ip(void) {
-    CU_ASSERT(is_valid_ip("192.168.1.1"));
-    CU_ASSERT(!is_valid_ip("999.999.999.999"));
+    CU_ASSERT(est_ip_valide("192.168.1.1"));
+    CU_ASSERT(!est_ip_valide("999.999.999.999"));
+    CU_ASSERT(!est_ip_valide("256.256.256.256"));
+    CU_ASSERT(!est_ip_valide("abc.def.ghi.jkl"));
 }
 
 /**** Cas de test - validation du port *****/ 
 void test_validation_port(void) {
-    CU_ASSERT(is_valid_port(8080));
-    CU_ASSERT(!is_valid_port(10));
+    CU_ASSERT(est_port_valide(8080));
+    CU_ASSERT(!est_port_valide(10));
+    CU_ASSERT(!est_port_valide(70000));
 }
 
 /******************* Lancement des tests ***********************/
