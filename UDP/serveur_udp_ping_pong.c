@@ -6,7 +6,7 @@
 #include <string.h>
 #include <netinet/in.h>
 
-int main(int argc, char** argv) {
+int    main(int argc, char** argv) {
 
     traiter_commande(argc != 2, argv[0], "<port>\nmauvais nombre d'arguments");
     
