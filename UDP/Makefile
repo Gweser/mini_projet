@@ -3,7 +3,7 @@ EXE_DIR=/tmp/
 FICHIERS=erreur udp nombre
 OBJS:=$(FICHIERS:%=%.o)
 
-all: ping_pong testsuite
+all: ping_pong testsuite analyse
 	-rm $(OBJS)
 
 ping_pong: client_udp_ping_pong.c serveur_udp_ping_pong.c $(EXE_DIR) $(OBJS)
@@ -23,6 +23,9 @@ erreur.o: erreur.c erreur.h
 
 nombre.o: nombre.c nombre.h
 	$(COMPILER) -c nombre.c -o nombre.o
+
+analyse:
+	cppcheck --enable=all --inconclusive --std=c99 --language=c --suppress=missingIncludeSystem .
 
 $(EXE_DIR):
 	mkdir -p $(EXE_DIR)
